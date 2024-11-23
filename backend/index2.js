@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 app.use(bodyParser.json());
-app.use(express.urlencoded({ extended: true }))
+app.use(express.urlencoded({ extended: true }));
 
 // Conexión a la base de datos usando un pool
 const db = mysql.createPool({
@@ -19,6 +19,17 @@ const db = mysql.createPool({
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0,
+});
+
+// Ruta de prueba para verificar conexión
+app.get('/test-db', async (req, res) => {
+  try {
+    const [rows] = await db.query('SELECT 1 + 1 AS result');
+    res.status(200).json({ success: true, data: rows });
+  } catch (error) {
+    console.error('Error al conectarse a la base de datos:', error);
+    res.status(500).json({ success: false, message: 'Error en la conexión a la base de datos' });
+  }
 });
 
 
