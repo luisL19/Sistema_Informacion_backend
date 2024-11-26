@@ -411,7 +411,7 @@ app.post('/api/reservas', async (req, res) => {
     const idReserva = reservaResult.insertId;
 
     // Registrar la relación en `clienteReserva` con `id_ClienteFK3`, `id_ReservaFK1`, y `id_MascotaFK`
-    await executeQuery('INSERT INTO clienteReserva (id_ClienteFK3, id_ReservaFK1, id_MascotaFK) VALUES (?, ?, ?)', [idCliente, idReserva, idMascota]);
+    await executeQuery('INSERT INTO clientereserva (id_ClienteFK3, id_ReservaFK1, id_MascotaFK) VALUES (?, ?, ?)', [idCliente, idReserva, idMascota]);
 
     res.status(201).json({ message: 'Reserva registrada exitosamente.' });
   } catch (error) {
