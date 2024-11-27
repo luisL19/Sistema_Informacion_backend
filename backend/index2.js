@@ -411,7 +411,7 @@ app.post('/api/reservas', async (req, res) => {
     const idReserva = reservaResult.insertId;
 
     // Registrar la relación en `clienteReserva` con `id_ClienteFK3`, `id_ReservaFK1`, y `id_MascotaFK`
-    await executeQuery('INSERT INTO clienteReserva (id_ClienteFK3, id_ReservaFK1, id_MascotaFK) VALUES (?, ?, ?)', [idCliente, idReserva, idMascota]);
+    await executeQuery('INSERT INTO clientereserva (id_ClienteFK3, id_ReservaFK1, id_MascotaFK) VALUES (?, ?, ?)', [idCliente, idReserva, idMascota]);
 
     res.status(201).json({ message: 'Reserva registrada exitosamente.' });
   } catch (error) {
@@ -442,7 +442,7 @@ app.get('/api/clientes/:userId/reservas', async (req, res) => {
     const sql = `
       SELECT r.id_Reservas, r.fecha_Inicio, r.fecha_Fin, r.tipo_servicio, r.estado, m.nombre AS nombre_mascota
       FROM reservas r
-      INNER JOIN clienteReserva cr ON r.id_Reservas = cr.id_ReservaFK1
+      INNER JOIN clientereserva cr ON r.id_Reservas = cr.id_ReservaFK1
       INNER JOIN mascotas m ON cr.id_MascotaFK = m.id_Mascota
       WHERE cr.id_ClienteFK3 = ?
     `;
@@ -859,4 +859,3 @@ app.put('/api/reservas/:id/estado', async (req, res) => {
     res.status(500).json({ error: 'Error al actualizar el estado de la reserva.' });
   }
 });
-
