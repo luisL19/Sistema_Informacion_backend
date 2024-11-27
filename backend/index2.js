@@ -813,7 +813,7 @@ app.get('/api/reservas', async (req, res) => {
            m.nombre AS nombre_mascota,
            u.nombre AS nombre_dueño, u.direccion, u.celular, u.correo
     FROM reservas r
-    INNER JOIN clienteReserva cr ON cr.id_ReservaFK1 = r.id_Reservas
+    INNER JOIN clientereserva cr ON cr.id_ReservaFK1 = r.id_Reservas
     INNER JOIN mascotas m ON cr.id_MascotaFK = m.id_Mascota
     INNER JOIN cliente cl ON cr.id_ClienteFK3 = cl.id_Cliente
     INNER JOIN usuario u ON cl.id_Usuario = u.id_Usuario
